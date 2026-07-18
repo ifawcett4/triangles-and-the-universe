@@ -10,22 +10,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html,
-body,
-#root {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-
 body {
   /* overflow: hidden; */
   background: #06060a;
   font-family: 'Bitcount Single', system-ui;
-}
-
-#root {
-  min-height: 100%;
 }
 
 h1,
@@ -45,11 +33,9 @@ p {
   font-size: 14px;
 }
 
-.scene-shell {
-  position: relative;
+section {
   width: 100vw;
-  height: 100vh;
-  /* overflow: hidden; */
+  min-height: 100vh;
 }
 
 .canvas {
@@ -58,26 +44,10 @@ p {
   display: block;
 }
 
-.overlay-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  /* display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 24px; */
-  pointer-events: none;
-}
-
-.overlay-layer > * {
-  pointer-events: auto;
-}
-
-@media (max-width: 768px) {
-  .overlay-layer {
-    padding: 16px;
-    align-items: flex-start;
-  }
+.canvas-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 }
 
 .full-page {
@@ -92,32 +62,126 @@ p {
   align-items: center;
 }
 
-.next-btn {
-  position: fixed;
-  bottom: 2vh;
-  right: 3vw;
-  border: none;
-  border-radius: 999px;
-  padding: 0.75rem 1.2rem;
-  cursor: pointer;
-  background: #fff;
-  color: #06060a;
+.stage-zero,
+.stage-one,
+.stage-three,
+.canvas-stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.accent-color {
-  color: rgb(0, 180, 144);
-}
-
-.stage-zero {
-  font-size: 3rem;
-  text-align: left;
-
-  .zero-section {
-    width: 100vw;
-    height: 100vh;
+.type-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .text-type {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 75vw;
+    // height: 100%  ;
+    font-size: 3rem;
+    text-align: left;
+  }
+}
+
+///////////////////////////////////
+/// STAGE 0
+////////////////////////////////
+
+.stage-zero {
+  position: relative;
+  z-index: 50;
+}
+
+///////////////////////////////////
+/// STAGE 1
+////////////////////////////////
+.stage-one {
+  position: relative;
+  z-index: 40;
+
+  font-size: 2rem;
+  text-align: left;
+  width: 100vw;
+  height: 100vh;
+
+  .wrapper {
+    width: 75vw;
+  }
+
+  .decrypted-text {
+    margin: 5%;
+  }
+}
+
+///////////////////////////////////
+/// STAGE 2
+////////////////////////////////
+.stage-two {
+  position: relative;
+  z-index: 30;
+  font-size: 2.5rem;
+
+  .spacer {
+    height: 600vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+  }
+
+  .panel {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    gap: 8vw;
+
+    background: #06060a;
+
+    img:nth-child(odd) {
+      transform: translateY(-10%);
+    }
+
+    img:nth-child(even) {
+      transform: translateY(10%);
+    }
+  }
+}
+
+///////////////////////////////////
+/// STAGE 3
+////////////////////////////////
+.stage-three {
+  position: relative;
+  z-index: 90;
+  height: 100vh;
+}
+
+///////////////////////////////////
+/// STAGE 4
+////////////////////////////////
+.canvas-stage {
+  position: relative;
+  z-index: 90;
+}
+
+.stage-two .panel {
+  position: relative;
+  background: #06060a;
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      z-index: $i;
+    }
   }
 }

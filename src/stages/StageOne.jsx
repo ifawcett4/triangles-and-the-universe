@@ -1,29 +1,11 @@
-import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
-import './StageOne.scss'
 import DecryptedText from '../components/DecryptedText'
 
 function StageOne({ text }) {
-  const containerRef = useRef()
-  const panelRef = useRef()
-
-  useGSAP(
-    () => {
-      ScrollTrigger.create({
-        trigger: panelRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        pin: true,
-        pinSpacing: false,
-      })
-    },
-    { scope: containerRef, dependencies: [] }
-  )
+  const container = useRef(null)
 
   return (
-    <div className="full-page centered stage-one">
+    <div ref={container} className="stage-one">
       <div className="wrapper">
         <div className="decrypted-text">
           <DecryptedText
@@ -40,7 +22,7 @@ function StageOne({ text }) {
 
         <div className="decrypted-text">
           <DecryptedText
-            className=" accent-color"
+            className="accent-color"
             text={text[1]}
             speed={20}
             maxIterations={5}
@@ -52,12 +34,6 @@ function StageOne({ text }) {
           />
         </div>
       </div>
-
-      <section
-        className="panel center"
-        ref={panelRef}
-        style={{ zIndex: 0 }}
-      ></section>
     </div>
   )
 }

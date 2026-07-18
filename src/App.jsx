@@ -8,10 +8,30 @@ import StageZero from './stages/StageZero'
 import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
 import TextType from './components/TextType'
+import StageThree from './stages/StageThree'
 
 function Model() {
+  const groupRef = useRef()
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.canvas-stage',
+        start: 'top top',
+        end: '+=300%',
+        scrub: 1,
+        pin: true,
+      },
+    })
+    tl.to(groupRef.current.rotation, { y: Math.PI * 2 }).to(
+      groupRef.current.position,
+      { z: 2 },
+      '<'
+    )
+  }, [])
+
   return (
-    <group>
+    <group ref={groupRef}>
       <Box material-color="hotpink" />
     </group>
   )
@@ -27,6 +47,7 @@ const stageData = {
       'Im a Creative Technologist',
       'Im a Designer',
       'Im a Developer',
+      'and..',
     ],
   },
   one: {
@@ -47,76 +68,62 @@ const stageData = {
       'Cool Stuff',
     ],
   },
+  three: {
+    id: 3,
+    description: 'more about',
+    text: [
+      'Im currently searching for other forward thinking creatives to work with. And searching to expand my creative tech capabilities to a variety of new executions.',
+      'more good words here about something interesting.',
+      'I am just a little guy. idk what to write about myself ',
+      'but lets get to the imortant stuff',
+      'The beginning of the universe.',
+    ],
+  },
 }
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function App() {
   const container = useRef(null)
-  const [stageZeroText, setStageZeroText] = useState(0)
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.zero-section',
-          pin: true,
-          start: 'top top',
-          end: '+=500%',
-          scrub: 1,
-          markers: true,
-          onUpdate: (self) => {
-            console.log('progress:', self.progress)
-            const i = Math.min(
-              stageData.zero.text.length - 1,
-              Math.floor(self.progress * stageData.zero.text.length)
-            )
-            setStageZeroText((prev) => (prev === i ? prev : i))
-          },
-        },
-      })
+  useGSAP(() => {
+    const refresh = () => ScrollTrigger.refresh(true) // true = hard refresh, recalculates from scratch
 
-      tl.addLabel('start')
-        .from('.zero-section', {})
-        .to('.zero-section', {})
-        .addLabel('end')
-    },
-    { scope: container }
-  )
+    // run once immediately after mount
+    requestAnimationFrame(() => requestAnimationFrame(refresh))
+
+    // and again once everything (images etc.) has fully loaded
+    window.addEventListener('load', refresh)
+    return () => window.removeEventListener('load', refresh)
+  }, [])
 
   return (
     <main className="scene-shell">
-      <Canvas className="canvas" camera={{ position: [0, 0, 5], fov: 45 }}>
-        <color attach="background" args={['#06060a']} />
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[3, 3, 3]} intensity={1.2} />
-        <Suspense fallback={null}>
-          <Model />
-        </Suspense>
-      </Canvas>
+      {/* type text */}
+      <StageZero text={stageData.zero.text} />
 
-      <div ref={container} className="full-page stage-zero">
-        <section className="zero-section center" style={{ zIndex: 0 }}>
-          <TextType
-            className="text-type"
-            key={stageZeroText}
-            text={stageData.zero.text[stageZeroText]}
-            typingSpeed={25}
-            pauseDuration={4000}
-            showCursor
-            cursorCharacter="_"
-            deletingSpeed={30}
-            variableSpeedEnabled={false}
-            variableSpeedMin={15}
-            variableSpeedMax={90}
-            cursorBlinkDuration={0.5}
-          />
-        </section>
+      {/* decode */}
+      <StageOne text={stageData.one.text} />
 
-        <StageOne text={stageData.one.text} />
-      </div>
-
+      {/* categories */}
       <StageTwo text={stageData.two.text} />
+
+      {/* type text again */}
+      <StageThree text={stageData.three.text} />
+
+      {/* 3D scroll for the rest, going sideways? */}
+      {/* Stage 4 which will be 3D using r3f and drei's html elements */}
+
+      <div className="canvas-stage">
+        <Canvas className="canvas" camera={{ position: [0, 0, 5], fov: 45 }}>
+          <color attach="background" args={['#06060a']} />
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[3, 3, 3]} intensity={1.2} />
+          <Suspense fallback={null}>
+            <Model />
+          </Suspense>
+        </Canvas>
+      </div>
     </main>
   )
 }

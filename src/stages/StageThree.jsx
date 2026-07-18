@@ -6,7 +6,7 @@ import TextType from '../components/TextType'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-function StageZero({ text }) {
+function StageThree({ text }) {
   const container = useRef(null)
   const [index, setIndex] = useState(0)
 
@@ -33,7 +33,7 @@ function StageZero({ text }) {
   )
 
   return (
-    <div ref={container} className="stage-zero">
+    <div ref={container} className="stage-three">
       <div className="type-wrapper">
         {' '}
         <TextType
@@ -51,4 +51,4 @@ function StageZero({ text }) {
   )
 }
 
-export default StageZero
+export default StageThree

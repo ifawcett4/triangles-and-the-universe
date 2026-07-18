@@ -9,6 +9,7 @@ import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
 import TextType from './components/TextType'
 import StageThree from './stages/StageThree'
+import Particles from './components/particles'
 
 function Model() {
   const groupRef = useRef()
@@ -120,7 +121,8 @@ export default function App() {
           <ambientLight intensity={0.8} />
           <directionalLight position={[3, 3, 3]} intensity={1.2} />
           <Suspense fallback={null}>
-            <Model />
+            {/* <Model /> */}
+            <Particles />
           </Suspense>
         </Canvas>
       </div>

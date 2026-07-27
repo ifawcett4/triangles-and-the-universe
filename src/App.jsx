@@ -9,34 +9,34 @@ import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
 import TextType from './components/TextType'
 import StageThree from './stages/StageThree'
-import Particles from './components/particles'
+import Particles from './components/particles/particles'
 
-function Model() {
-  const groupRef = useRef()
+// function Model() {
+//   const groupRef = useRef()
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.canvas-stage',
-        start: 'top top',
-        end: '+=300%',
-        scrub: 1,
-        pin: true,
-      },
-    })
-    tl.to(groupRef.current.rotation, { y: Math.PI * 2 }).to(
-      groupRef.current.position,
-      { z: 2 },
-      '<'
-    )
-  }, [])
+//   useGSAP(() => {
+//     const tl = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: '.canvas-stage',
+//         start: 'top top',
+//         end: '+=300%',
+//         scrub: 1,
+//         pin: true,
+//       },
+//     })
+//     tl.to(groupRef.current.rotation, { y: Math.PI * 2 }).to(
+//       groupRef.current.position,
+//       { z: 2 },
+//       '<'
+//     )
+//   }, [])
 
-  return (
-    <group ref={groupRef}>
-      <Box material-color="hotpink" />
-    </group>
-  )
-}
+//   return (
+//     <group ref={groupRef}>
+//       <Box material-color="hotpink" />
+//     </group>
+//   )
+// }
 
 const stageData = {
   zero: {
@@ -122,7 +122,7 @@ export default function App() {
           <directionalLight position={[3, 3, 3]} intensity={1.2} />
           <Suspense fallback={null}>
             {/* <Model /> */}
-            <Particles />
+            <Particles count={8000} />
           </Suspense>
         </Canvas>
       </div>

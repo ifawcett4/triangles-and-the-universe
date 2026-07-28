@@ -2,6 +2,8 @@ varying float vDistance;
 
 uniform vec3 uEmissiveColor;
 uniform float uEmissiveIntensity;
+uniform float uOpacity;
+uniform float uWhiteMix;
 
 void main() {
   vec3 color =vec3(0.0, 0.533, 1.0);
@@ -19,11 +21,13 @@ void main() {
   color = mix(color, color2, vDistance * 0.5);
   color = mix(vec3(0.0), color, strength);
 
+  color = mix(color, vec3(1.0), uWhiteMix);
+
   // Add emissive glow, scaled by the same strength so it fades at the edges
   vec3 emissive = color * uEmissiveIntensity * strength;
   color += emissive;
 
   // Here we're passing the strength in the alpha channel to make sure the outskirts
   // of the particle are not visible
-  gl_FragColor = vec4(color, strength);
-}
+ gl_FragColor = vec4(color, strength * uOpacity);
+ }

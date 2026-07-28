@@ -11,33 +11,6 @@ import TextType from './components/TextType'
 import StageThree from './stages/StageThree'
 import Particles from './components/particles/particles'
 
-// function Model() {
-//   const groupRef = useRef()
-
-//   useGSAP(() => {
-//     const tl = gsap.timeline({
-//       scrollTrigger: {
-//         trigger: '.canvas-stage',
-//         start: 'top top',
-//         end: '+=300%',
-//         scrub: 1,
-//         pin: true,
-//       },
-//     })
-//     tl.to(groupRef.current.rotation, { y: Math.PI * 2 }).to(
-//       groupRef.current.position,
-//       { z: 2 },
-//       '<'
-//     )
-//   }, [])
-
-//   return (
-//     <group ref={groupRef}>
-//       <Box material-color="hotpink" />
-//     </group>
-//   )
-// }
-
 const stageData = {
   zero: {
     id: 0,
@@ -85,7 +58,7 @@ const stageData = {
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function App() {
-  const container = useRef(null)
+  const canvasStageRef = useRef(null)
 
   useGSAP(() => {
     const refresh = () => ScrollTrigger.refresh(true) // true = hard refresh, recalculates from scratch
@@ -115,14 +88,14 @@ export default function App() {
       {/* 3D scroll for the rest, going sideways? */}
       {/* Stage 4 which will be 3D using r3f and drei's html elements */}
 
-      <div className="canvas-stage">
+      <div className="canvas-stage" ref={canvasStageRef}>
         <Canvas className="canvas" camera={{ position: [0, 0, 5], fov: 45 }}>
           <color attach="background" args={['#06060a']} />
           <ambientLight intensity={0.8} />
           <directionalLight position={[3, 3, 3]} intensity={1.2} />
           <Suspense fallback={null}>
             {/* <Model /> */}
-            <Particles count={8000} />
+            <Particles count={8000} scrollTriggerRef={canvasStageRef} />
           </Suspense>
         </Canvas>
       </div>

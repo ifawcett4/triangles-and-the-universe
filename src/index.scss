@@ -21,6 +21,7 @@ body {
   background: #06060a;
   font-family: 'Bitcount Single', system-ui;
   overflow-x: hidden;
+  text-wrap: pretty;
 }
 
 h1,
@@ -199,6 +200,7 @@ section {
 
   .wrapper {
     width: 75vw;
+    max-width: 1200px;
   }
 
   .decrypted-text {
@@ -216,7 +218,7 @@ section {
   width: 100%;
 
   .spacer {
-    height: 600vh;
+    // height: 600vh;
     width: 100vw;
     margin: 0;
     padding: 0;
@@ -260,7 +262,7 @@ section {
   height: 100vh;
 
   .text-type-three {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
 
@@ -301,12 +303,10 @@ section {
   .three-d-text-type {
     transform: translateY(-50%);
     padding-bottom: 1%;
-    /* Prevents the cursor from highlighting or selecting text */
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-
-    /* Prevents clicks, hovers, taps, and drag events */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     pointer-events: none;
+    font-size: 2rem;
   }
 }

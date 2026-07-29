@@ -15,7 +15,7 @@ function StageZero({ text }) {
       const st = ScrollTrigger.create({
         trigger: container.current,
         start: 'top top',
-        end: `+=${text.length * 100}%`,
+        end: `+=${text.length * 110}%`,
         pin: true,
         scrub: 1,
         anticipatePin: 1,

@@ -35,10 +35,10 @@ function StageZero({ text }) {
 
   return (
     <div ref={container} className="stage-zero">
-      <div class="scrolldown">
-        <div class="chevrons">
-          <div class="chevrondown"></div>
-          <div class="chevrondown"></div>
+      <div className="scrolldown">
+        <div className="chevrons">
+          <div className="chevrondown"></div>
+          <div className="chevrondown"></div>
         </div>
       </div>
 

@@ -90,7 +90,11 @@ export default function App() {
       {/* Stage 4 which will be 3D using r3f and drei's html elements */}
 
       <div className="canvas-stage" ref={canvasStageRef}>
-        <Canvas className="canvas" camera={{ position: [0, 0, 5], fov: 45 }}>
+        <Canvas
+          className="canvas"
+          camera={{ position: [0, 0, 5], fov: 45 }}
+          // frameloop="demand"
+        >
           <color attach="background" args={['#06060a']} />
           {/* <ambientLight intensity={0.8} />
           <directionalLight position={[3, 3, 3]} intensity={1.2} /> */}

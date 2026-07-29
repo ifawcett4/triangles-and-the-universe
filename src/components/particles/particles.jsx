@@ -31,11 +31,15 @@ const steps = [
   { step: 2, breakpoint: 0.2, text: 'which became everything' },
   { step: 3, breakpoint: 0.3, text: 'like our Solar System' },
   { step: 4, breakpoint: 0.4, text: 'which just so happens to include earth' },
-  { step: 5, breakpoint: 0.5, text: 'where all of history happened' },
+  {
+    step: 5,
+    breakpoint: 0.5,
+    text: 'where all of history happened (RIP Dinosaurs)',
+  },
   { step: 6, breakpoint: 0.6, text: 'like pyramids' },
   { step: 7, breakpoint: 0.7, text: 'and art & stuff' },
   { step: 8, breakpoint: 0.8, text: 'and now you are here' },
-  { step: 9, breakpoint: 0.9, text: 'looking at a triangle on a screen' },
+  { step: 9, breakpoint: 0.95, text: 'looking at a triangle on a screen' },
 ]
 
 const SCALE = {
@@ -57,8 +61,8 @@ const TRANSITION_FRACTION = 0.35
 // ramps 0 -> 1 across the first TRANSITION_FRACTION of [from, to], holds
 // at 1 after `to`, sits at 0 before `from`. This is the ONLY timing
 // primitive in the whole system — no durations, no timelines.
-function mapRange(progress, from, to, fraction = TRANSITION_FRACTION) {
-  const width = (to - from) * fraction
+function mapRange(progress, from, to, fraction) {
+  const width = (to - from) * (fraction || TRANSITION_FRACTION)
   if (width <= 0) return progress >= from ? 1 : 0
   return THREE.MathUtils.clamp((progress - from) / width, 0, 1)
 }
@@ -110,6 +114,8 @@ const Particles = (props) => {
   const otherChildrenRef = useRef([])
 
   const [activeStep, setActiveStep] = useState(0)
+  const isActive = (modelStep, buffer = 1) =>
+    Math.abs(activeStep - modelStep) <= buffer
 
   const uniforms = useMemo(
     () => ({
@@ -190,7 +196,8 @@ const Particles = (props) => {
           const opacityFactor = mapRange(
             progress,
             steps[1].breakpoint,
-            steps[2].breakpoint
+            steps[2].breakpoint,
+            0.5
           )
           points.current.material.uniforms.uOpacity.value = opacityFactor
 
@@ -198,7 +205,8 @@ const Particles = (props) => {
           const spreadFactor = mapRange(
             progress,
             steps[2].breakpoint,
-            steps[3].breakpoint
+            steps[3].breakpoint,
+            0.5
           )
           points.current.material.uniforms.uSpread.value = spreadFactor
           let particleScale = THREE.MathUtils.lerp(
@@ -211,7 +219,8 @@ const Particles = (props) => {
           const bgFactor = mapRange(
             progress,
             steps[3].breakpoint,
-            steps[4].breakpoint
+            steps[4].breakpoint,
+            0.5
           )
           particleScale = THREE.MathUtils.lerp(
             particleScale,
@@ -386,6 +395,7 @@ const Particles = (props) => {
           intensity={1.1}
           luminanceThreshold={0.5}
           luminanceSmoothing={0.2}
+          visible={isActive(1, 2, 3, 7, 8, 9)}
         />
       </EffectComposer>
       <Html>
@@ -422,13 +432,13 @@ const Particles = (props) => {
           />
         </points>
 
-        <SolarSystem ref={solarSystemRef} />
+        <SolarSystem ref={solarSystemRef} visible={isActive(3, 4, 5, 6)} />
       </Float>
 
-      <Dino ref={dinoRef} />
-      <Pyramid ref={pyramidRef} />
-      <David ref={davidRef} />
-      <Computer ref={computerRef} />
+      <Dino ref={dinoRef} visible={isActive(5, 6)} />
+      <Pyramid ref={pyramidRef} visible={isActive(6, 7)} />
+      <David ref={davidRef} visible={isActive(7, 8)} />
+      <Computer ref={computerRef} visible={isActive(8, 9)} />
     </group>
   )
 }

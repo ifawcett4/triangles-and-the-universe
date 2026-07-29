@@ -18,6 +18,7 @@ function StageZero({ text }) {
         end: `+=${text.length * 100}%`,
         pin: true,
         scrub: 1,
+        anticipatePin: 1,
         onUpdate: (self) => {
           const i = Math.min(
             text.length - 1,
@@ -34,6 +35,13 @@ function StageZero({ text }) {
 
   return (
     <div ref={container} className="stage-zero">
+      <div class="scrolldown">
+        <div class="chevrons">
+          <div class="chevrondown"></div>
+          <div class="chevrondown"></div>
+        </div>
+      </div>
+
       <div className="type-wrapper">
         {' '}
         <TextType

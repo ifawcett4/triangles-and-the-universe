@@ -166,7 +166,6 @@ const Particles = (props) => {
         start: 'top top',
         end: `+=${steps.length * 2 * 100}%`,
         scrub: 1,
-        markers: true,
         pin: true,
         onUpdate: (self) => {
           // the ONLY progress value in the whole system — everything

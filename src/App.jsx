@@ -46,9 +46,10 @@ const stageData = {
     id: 3,
     description: 'more about',
     text: [
-      'Im currently searching for other forward thinking creatives to work with. And searching to expand my creative tech capabilities to a variety of new executions.',
-      'more good words here about something interesting.',
-      'I am just a little guy. idk what to write about myself ',
+      'Im looking to expand my creative tech capabilities',
+      'Working with forward thinking people ',
+      'And I think this could be my kind of place',
+      'So I hope to get to chat more',
       'but lets get to the imortant stuff',
       'The beginning of the universe.',
     ],

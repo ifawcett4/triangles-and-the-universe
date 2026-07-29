@@ -2,6 +2,7 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useRef } from 'react'
+import LazyVideo from '../components/LazyVideo'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -18,18 +19,43 @@ function StageTwo({ text }) {
   useGSAP(
     () => {
       const panels = panelsRef.current
-      const triggers = panels.map((panel, i) => {
+
+      const pinTriggers = panels.map((panel, i) => {
         const isLast = i === panels.length - 1
         return ScrollTrigger.create({
           trigger: panel,
           start: 'top top',
           end: isLast ? '+=100%' : 'bottom top',
           pin: true,
-          pinSpacing: isLast, // false for every panel except the last
+          pinSpacing: isLast,
+          anticipatePin: 1,
         })
       })
 
-      return () => triggers.forEach((st) => st.kill())
+      const fadeTriggers = panels.map((panel) => {
+        const media = panel.querySelectorAll('img, video')
+        if (!media.length) return null
+
+        return gsap.fromTo(
+          media,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panel,
+              start: 'top bottom',
+              end: 'top top',
+              scrub: true,
+            },
+          }
+        )
+      })
+
+      return () => {
+        pinTriggers.forEach((st) => st.kill())
+        fadeTriggers.forEach((tween) => tween?.scrollTrigger?.kill())
+      }
     },
     { scope: containerRef, dependencies: [] }
   )
@@ -41,7 +67,7 @@ function StageTwo({ text }) {
       </section>
       {/* AUGMENTED REALITY */}
       <section className="panel photos" ref={addPanel}>
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289092/AR_01_elmo_ni4cqn.mp4'
           }
@@ -51,7 +77,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288925/AR_02_unseen_zoo_badd1o.mp4'
           }
@@ -61,7 +87,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288923/AR_03_grey_goose_phqvl1.mp4'
           }
@@ -71,7 +97,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288923/AR_04_Nydia_l1fkwk.mp4'
           }
@@ -87,7 +113,7 @@ function StageTwo({ text }) {
       </section>
       {/* INTERACTIVE EXPERIENCES */}
       <section className="panel photos" ref={addPanel}>
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289078/INT_01_xcrykj.mp4'
           }
@@ -97,7 +123,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '400px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289080/INT_02_djkhvl.mp4'
           }
@@ -107,7 +133,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '400px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290286/INT_03_pwkwnu.mp4'
           }
@@ -130,7 +156,7 @@ function StageTwo({ text }) {
           width="400px"
           height="auto"
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288920/GAME_01_pswjhj.mp4'
           }
@@ -140,7 +166,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290318/GAME_02_b3jmcu.mp4'
           }
@@ -163,7 +189,7 @@ function StageTwo({ text }) {
           width="400px"
           height="auto"
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290412/COOL_01_uzntnb.mp4'
           }
@@ -173,7 +199,7 @@ function StageTwo({ text }) {
           playsInline
           style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <video
+        <LazyVideo
           src={
             'https://res.cloudinary.com/dmdjguh0a/video/upload/v1781665062/usb_scrollsite_01_ebuvm1.mp4'
           }

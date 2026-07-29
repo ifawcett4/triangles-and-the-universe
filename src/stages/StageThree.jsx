@@ -37,7 +37,7 @@ function StageThree({ text }) {
       <div className="type-wrapper">
         {' '}
         <TextType
-          className="text-type"
+          className="text-type-three"
           key={index}
           text={text[index]}
           typingSpeed={25}

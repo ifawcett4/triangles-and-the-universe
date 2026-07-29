@@ -32,8 +32,8 @@ const steps = [
   { step: 3, breakpoint: 0.3, text: 'like our Solar System' },
   { step: 4, breakpoint: 0.4, text: 'which just so happens to include earth' },
   { step: 5, breakpoint: 0.5, text: 'where all of history happened' },
-  { step: 6, breakpoint: 0.6, text: 'where all of history happened' },
-  { step: 7, breakpoint: 0.7, text: 'where all of history happened' },
+  { step: 6, breakpoint: 0.6, text: 'like pyramids' },
+  { step: 7, breakpoint: 0.7, text: 'and art & stuff' },
   { step: 8, breakpoint: 0.8, text: 'and now you are here' },
   { step: 9, breakpoint: 0.9, text: 'looking at a triangle on a screen' },
 ]
@@ -382,7 +382,6 @@ const Particles = (props) => {
   return (
     <group>
       <OrbitControls enableZoom={false} enablePan={false} />
-
       <EffectComposer>
         <Bloom
           intensity={1.1}
@@ -390,7 +389,6 @@ const Particles = (props) => {
           luminanceSmoothing={0.2}
         />
       </EffectComposer>
-
       <Html>
         <div className="three-d-text-wrapper">
           <TextType
@@ -405,7 +403,6 @@ const Particles = (props) => {
           />
         </div>
       </Html>
-
       <Float rotationIntensity={0} floatingRange={[0.1, 0.5]}>
         <points ref={points} scale={[1, 1, 1]} rotation={[0.75, 0, 0.2]}>
           <bufferGeometry>

@@ -39,124 +39,149 @@ function StageTwo({ text }) {
       <section className="panel center" ref={addPanel}>
         <h1>{text[0]}</h1>
       </section>
-
+      {/* AUGMENTED REALITY */}
       <section className="panel photos" ref={addPanel}>
-        <img
-          src="https://picsum.photos/200/300?random=1"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289092/AR_01_elmo_ni4cqn.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=2"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288925/AR_02_unseen_zoo_badd1o.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=3"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288923/AR_03_grey_goose_phqvl1.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=4"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288923/AR_04_Nydia_l1fkwk.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
       </section>
-
       <section className="panel center photos" ref={addPanel}>
         <h1>{text[1]}</h1>
       </section>
-
+      {/* INTERACTIVE EXPERIENCES */}
       <section className="panel photos" ref={addPanel}>
-        <img
-          src="https://picsum.photos/200/300?random=4223"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289078/INT_01_xcrykj.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '400px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=435"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785289080/INT_02_djkhvl.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '400px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=67"
-          alt=""
-          width="200"
-          height="300"
-        />
-        <img
-          src="https://picsum.photos/200/300?random=627"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290286/INT_03_pwkwnu.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '400px', height: 'auto', display: 'block' }}
         />
       </section>
-
       <section className="panel center" ref={addPanel}>
         <h1>{text[2]}</h1>
       </section>
 
+      {/* GAMES */}
       <section className="panel photos" ref={addPanel}>
         <img
-          src="https://picsum.photos/200/300?random=76"
+          src="https://res.cloudinary.com/dmdjguh0a/image/upload/v1785289451/ezgif-4-bcad5192bf_ssmhuh.gif"
           alt=""
-          width="200"
-          height="300"
+          width="400px"
+          height="auto"
         />
-        <img
-          src="https://picsum.photos/200/300?random=324"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785288920/GAME_01_pswjhj.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=3294"
-          alt=""
-          width="200"
-          height="300"
-        />
-        <img
-          src="https://picsum.photos/200/300?random=32994"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290318/GAME_02_b3jmcu.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '400px', height: 'auto', display: 'block' }}
         />
       </section>
-
       <section className="panel center" ref={addPanel}>
         <h1>{text[3]}</h1>
       </section>
 
+      {/* COOL STUFF */}
       <section className="panel photos" ref={addPanel}>
         <img
-          src="https://picsum.photos/200/300?random=67785"
+          src="https://res.cloudinary.com/dmdjguh0a/image/upload/v1785289461/ezgif-3-2872b0537e_xzankr.gif"
           alt=""
-          width="200"
-          height="300"
+          width="400px"
+          height="auto"
         />
-        <img
-          src="https://picsum.photos/200/300?random=23"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1785290412/COOL_01_uzntnb.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '200px', height: 'auto', display: 'block' }}
         />
-        <img
-          src="https://picsum.photos/200/300?random=765"
-          alt=""
-          width="200"
-          height="300"
-        />
-        <img
-          src="https://picsum.photos/200/300?random=7605"
-          alt=""
-          width="200"
-          height="300"
+        <video
+          src={
+            'https://res.cloudinary.com/dmdjguh0a/video/upload/v1781665062/usb_scrollsite_01_ebuvm1.mp4'
+          }
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '400px', height: 'auto', display: 'block' }}
         />
       </section>
     </div>

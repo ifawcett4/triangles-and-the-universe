@@ -7,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import StageZero from './stages/StageZero'
 import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
-import TextType from './components/TextType'
 import StageThree from './stages/StageThree'
 import Particles from './components/particles/particles'
 
@@ -39,7 +38,7 @@ const stageData = {
       'Augmented Reality',
       'Interactive Experiences',
       'Games',
-      'Cool Stuff',
+      'Generally Cool Stuff',
     ],
   },
   three: {
@@ -47,11 +46,12 @@ const stageData = {
     description: 'more about',
     text: [
       'Im looking to expand my creative tech capabilities',
-      'Working with forward thinking people ',
+      'Working with forward thinking creative people ',
+      'who make interesting things',
       'And I think this could be my kind of place',
       'So I hope to get to chat more',
       'but lets get to the imortant stuff',
-      'The beginning of the universe.',
+      'The beginning of the universe!',
     ],
   },
 }
@@ -62,12 +62,8 @@ export default function App() {
   const canvasStageRef = useRef(null)
 
   useGSAP(() => {
-    const refresh = () => ScrollTrigger.refresh(true) // true = hard refresh, recalculates from scratch
-
-    // run once immediately after mount
+    const refresh = () => ScrollTrigger.refresh(true)
     requestAnimationFrame(() => requestAnimationFrame(refresh))
-
-    // and again once everything (images etc.) has fully loaded
     window.addEventListener('load', refresh)
     return () => window.removeEventListener('load', refresh)
   }, [])
@@ -86,9 +82,7 @@ export default function App() {
       {/* type text again */}
       <StageThree text={stageData.three.text} />
 
-      {/* 3D scroll for the rest, going sideways? */}
-      {/* Stage 4 which will be 3D using r3f and drei's html elements */}
-
+      {/* 3D Stuff */}
       <div className="canvas-stage" ref={canvasStageRef}>
         <Canvas
           className="canvas"
@@ -96,10 +90,8 @@ export default function App() {
           // frameloop="demand"
         >
           <color attach="background" args={['#06060a']} />
-          {/* <ambientLight intensity={0.8} />
-          <directionalLight position={[3, 3, 3]} intensity={1.2} /> */}
+
           <Suspense fallback={null}>
-            {/* <Model /> */}
             <Particles count={8000} scrollTriggerRef={canvasStageRef} />
           </Suspense>
           <Environment preset="sunset" />

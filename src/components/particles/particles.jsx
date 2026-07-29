@@ -1,16 +1,11 @@
 //guided by: https://blog.maximeheckel.com/posts/the-magical-world-of-particles-with-react-three-fiber-and-shaders/
 
-import { OrbitControls, Float, Html, Environment } from '@react-three/drei'
+import { OrbitControls, Float, Html } from '@react-three/drei'
 import { useState, useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Color } from 'three'
 import * as THREE from 'three'
-import {
-  Bloom,
-  EffectComposer,
-  DepthOfField,
-  Noise,
-} from '@react-three/postprocessing'
+import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -44,7 +39,7 @@ const steps = [
 
 const SCALE = {
   particlesSpread: 1,
-  particlesBackground: 100,
+  particlesBackground: 80,
   solarSystem: 0.05,
   earthZoom: 15,
   dino: 0.4,
@@ -53,14 +48,8 @@ const SCALE = {
   computer: 0.4,
 }
 
-// how much of each breakpoint gap is spent actually transitioning;
-// the rest is a hold — but now purely a function of scroll progress,
-// never wall-clock time
 const TRANSITION_FRACTION = 0.35
 
-// ramps 0 -> 1 across the first TRANSITION_FRACTION of [from, to], holds
-// at 1 after `to`, sits at 0 before `from`. This is the ONLY timing
-// primitive in the whole system — no durations, no timelines.
 function mapRange(progress, from, to, fraction) {
   const width = (to - from) * (fraction || TRANSITION_FRACTION)
   if (width <= 0) return progress >= from ? 1 : 0
@@ -93,7 +82,7 @@ const Particles = (props) => {
     scrollTriggerRef,
   } = props
 
-  const ORIGIN = new THREE.Vector3(0, 0, 0) // top of file
+  const ORIGIN = new THREE.Vector3(0, 0, 0)
 
   const radius = 2
   const points = useRef()
@@ -106,7 +95,6 @@ const Particles = (props) => {
   const davidRef = useRef()
   const computerRef = useRef()
 
-  // earth-specific reparenting state — lives across onUpdate calls
   const earthTargetRef = useRef(null)
   const earthReparentedRef = useRef(false)
   const earthBasePosRef = useRef(null)
@@ -139,9 +127,6 @@ const Particles = (props) => {
       points.current.material.uniforms.uWhiteMix.value = 0
       points.current.scale.set(1, 1, 1)
 
-      // just LOCATE earth — do NOT attach/reparent yet, so it stays under
-      // its animated orbit parent and keeps moving with the GLTF animation
-      // right up until the earth step begins
       let earthTarget = null
       solarSystemRef.current.traverse((child) => {
         if (child.isMesh) {
@@ -174,9 +159,6 @@ const Particles = (props) => {
         scrub: 1,
         pin: true,
         onUpdate: (self) => {
-          // the ONLY progress value in the whole system — everything
-          // below is a pure function of this, so nothing can drift
-          // out of sync with anything else
           const progress = self.progress
 
           // ── active step text ──
@@ -215,12 +197,12 @@ const Particles = (props) => {
             spreadFactor
           )
 
-          // ── step 3: blow out to background, turn white, freeze rotation, reveal solar system ──
+          // ── step 3: zoom out to background, turn white, freeze rotation, reveal solar system ──
           const bgFactor = mapRange(
             progress,
             steps[3].breakpoint,
             steps[4].breakpoint,
-            0.5
+            0.9
           )
           particleScale = THREE.MathUtils.lerp(
             particleScale,

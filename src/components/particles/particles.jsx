@@ -1,11 +1,16 @@
 //guided by: https://blog.maximeheckel.com/posts/the-magical-world-of-particles-with-react-three-fiber-and-shaders/
 
-import { OrbitControls, Float, Html } from '@react-three/drei'
+import { OrbitControls, Float, Html, Environment } from '@react-three/drei'
 import { useState, useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Color } from 'three'
 import * as THREE from 'three'
-import { Bloom, EffectComposer } from '@react-three/postprocessing'
+import {
+  Bloom,
+  EffectComposer,
+  DepthOfField,
+  Noise,
+} from '@react-three/postprocessing'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -39,9 +44,9 @@ const SCALE = {
   solarSystem: 0.05,
   earthZoom: 15,
   dino: 0.4,
-  pyramid: 0.1,
-  david: 0.005,
-  computer: 0.3,
+  pyramid: 0.2,
+  david: 0.012,
+  computer: 0.4,
 }
 
 // how much of each breakpoint gap is spent actually transitioning;
@@ -58,14 +63,22 @@ function mapRange(progress, from, to, fraction = TRANSITION_FRACTION) {
   return THREE.MathUtils.clamp((progress - from) / width, 0, 1)
 }
 
-// generic "enter then hold then exit" scale for the swappable models —
-// enters ramping up between [enterBp, exitBp], holds, exits ramping
-// down between [exitBp, exitNextBp]
-function setModelScale(obj, progress, enterBp, exitBp, exitNextBp, restScale) {
+function setModelScale(
+  obj,
+  progress,
+  enterBp,
+  exitBp,
+  exitNextBp,
+  restScale,
+  baseRotationY = 0
+) {
   if (!obj) return
   const enterFactor = mapRange(progress, enterBp, exitBp)
   const exitFactor = mapRange(progress, exitBp, exitNextBp)
   obj.scale.setScalar(restScale * enterFactor * (1 - exitFactor))
+
+  const rotationProgress = mapRange(progress, enterBp, exitNextBp, 1)
+  obj.rotation.y = baseRotationY + rotationProgress * Math.PI * 2
 }
 
 const Particles = (props) => {
@@ -75,6 +88,8 @@ const Particles = (props) => {
     emissiveIntensity = 1.5,
     scrollTriggerRef,
   } = props
+
+  const ORIGIN = new THREE.Vector3(0, 0, 0) // top of file
 
   const radius = 2
   const points = useRef()
@@ -138,6 +153,11 @@ const Particles = (props) => {
       pyramidRef.current?.scale.set(0, 0, 0)
       davidRef.current?.scale.set(0, 0, 0)
       computerRef.current?.scale.set(0, 0, 0)
+
+      const dinoBaseRotationY = dinoRef.current?.rotation.y ?? 0
+      const pyramidBaseRotationY = pyramidRef.current?.rotation.y ?? 0
+      const davidBaseRotationY = davidRef.current?.rotation.y ?? 0
+      const computerBaseRotationY = computerRef.current?.rotation.y ?? 0
 
       const action = solarSystemRef.current.userData.action
 
@@ -252,7 +272,7 @@ const Particles = (props) => {
 
               earthTarget.position.lerpVectors(
                 earthBasePosRef.current,
-                new THREE.Vector3(0, 0, 0),
+                ORIGIN,
                 earthEnter
               )
 
@@ -280,7 +300,8 @@ const Particles = (props) => {
             steps[5].breakpoint,
             steps[6].breakpoint,
             steps[7].breakpoint,
-            SCALE.dino
+            SCALE.dino,
+            dinoBaseRotationY
           )
           setModelScale(
             pyramidRef.current,
@@ -288,7 +309,8 @@ const Particles = (props) => {
             steps[6].breakpoint,
             steps[7].breakpoint,
             steps[8].breakpoint,
-            SCALE.pyramid
+            SCALE.pyramid,
+            pyramidBaseRotationY
           )
           setModelScale(
             davidRef.current,
@@ -296,7 +318,8 @@ const Particles = (props) => {
             steps[7].breakpoint,
             steps[8].breakpoint,
             steps[9].breakpoint,
-            SCALE.david
+            SCALE.david,
+            davidBaseRotationY
           )
 
           // then an additional scale-up + texture crossfade as we move through step 9
@@ -319,11 +342,11 @@ const Particles = (props) => {
 
           computerRef.current?.scale.setScalar(computerScale)
 
-          // crossfade the screen texture from tex1 -> tex2 in lockstep with the expand
           if (computerRef.current) {
-            Computer.setScreenLerp(computerRef.current, 1)
-          } else {
-            console.warn('computerRef.current is null')
+            computerRef.current.rotation.y =
+              computerBaseRotationY +
+              mapRange(progress, steps[8].breakpoint, 1, 1) * Math.PI * 2
+            Computer.setScreenLerp(computerRef.current, computerExpand)
           }
         },
       })
@@ -359,10 +382,11 @@ const Particles = (props) => {
   return (
     <group>
       <OrbitControls enableZoom={false} enablePan={false} />
+
       <EffectComposer>
         <Bloom
-          intensity={1.5}
-          luminanceThreshold={0.3}
+          intensity={1.1}
+          luminanceThreshold={0.5}
           luminanceSmoothing={0.2}
         />
       </EffectComposer>

@@ -1,6 +1,6 @@
 import { Suspense, useState, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Box } from '@react-three/drei'
+import { Box, Environment } from '@react-three/drei'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -91,12 +91,13 @@ export default function App() {
       <div className="canvas-stage" ref={canvasStageRef}>
         <Canvas className="canvas" camera={{ position: [0, 0, 5], fov: 45 }}>
           <color attach="background" args={['#06060a']} />
-          <ambientLight intensity={0.8} />
-          <directionalLight position={[3, 3, 3]} intensity={1.2} />
+          {/* <ambientLight intensity={0.8} />
+          <directionalLight position={[3, 3, 3]} intensity={1.2} /> */}
           <Suspense fallback={null}>
             {/* <Model /> */}
             <Particles count={8000} scrollTriggerRef={canvasStageRef} />
           </Suspense>
+          <Environment preset="sunset" />
         </Canvas>
       </div>
     </main>

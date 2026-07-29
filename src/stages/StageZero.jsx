@@ -41,7 +41,7 @@ function StageZero({ text }) {
           key={index}
           text={text[index]}
           typingSpeed={25}
-          pauseDuration={4000}
+          pauseDuration={100000}
           showCursor
           cursorCharacter="_"
           deletingSpeed={30}

@@ -9,16 +9,17 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import TextType from '../TextType'
+import TextType from '../components/TextType'
+import { isMobile } from 'react-device-detect'
 
-import vertexShader from './vertexShader.glsl?raw'
-import fragmentShader from './fragmentShader.glsl?raw'
+import vertexShader from '../components/particles/vertexShader.glsl?raw'
+import fragmentShader from '../components/particles/fragmentShader.glsl?raw'
 
-import SolarSystem from '../../models/SolarSystem'
-import Dino from '../../models/Dino'
-import Pyramid from '../../models/Pyramid'
-import David from '../../models/David'
-import Computer from '../../models/Computer'
+import SolarSystem from '../models/SolarSystem'
+import Dino from '../models/Dino'
+import Pyramid from '../models/Pyramid'
+import David from '../models/David'
+import Computer from '../models/Computer'
 
 const steps = [
   { step: 0, breakpoint: 0, text: 'at first there was nothing...' },
@@ -75,7 +76,7 @@ function setModelScale(
   obj.rotation.y = baseRotationY + rotationProgress * Math.PI * 2
 }
 
-const Particles = (props) => {
+const StageFour = (props) => {
   const {
     count,
     emissiveColor = '#ff00c3',
@@ -380,7 +381,8 @@ const Particles = (props) => {
 
   return (
     <group>
-      <OrbitControls enableZoom={false} enablePan={false} />
+      {!isMobile && <OrbitControls enableZoom={false} enablePan={false} />}
+
       <EffectComposer>
         <Bloom
           intensity={1.1}
@@ -435,4 +437,4 @@ const Particles = (props) => {
   )
 }
 
-export default Particles
+export default StageFour

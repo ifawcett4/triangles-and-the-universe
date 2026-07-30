@@ -6,6 +6,11 @@ import LazyVideo from '../components/LazyVideo'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
+const isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+
 function StageTwo({ text }) {
   const containerRef = useRef()
   const panelsRef = useRef([])
@@ -60,6 +65,11 @@ function StageTwo({ text }) {
     { scope: containerRef, dependencies: [] }
   )
 
+  const verticalWidth = isMobile ? 'auto' : '10vw'
+  const verticalHeight = isMobile ? '18vh' : 'auto'
+  const horizontalWidth = isMobile ? 'auto' : '20vw'
+  const horizontalHeight = isMobile ? '20vh' : 'auto'
+
   return (
     <div className="stage-two" ref={containerRef}>
       <section className="panel center" ref={addPanel}>
@@ -75,7 +85,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
         <LazyVideo
           src={
@@ -85,7 +100,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
         <LazyVideo
           src={
@@ -95,7 +115,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
         <LazyVideo
           src={
@@ -105,7 +130,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
       </section>
       <section className="panel center photos" ref={addPanel}>
@@ -121,7 +151,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '400px', height: 'auto', display: 'block' }}
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
         <LazyVideo
           src={
@@ -131,7 +166,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '400px', height: 'auto', display: 'block' }}
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
         <LazyVideo
           src={
@@ -141,7 +181,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '400px', height: 'auto', display: 'block' }}
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
       </section>
       <section className="panel center" ref={addPanel}>
@@ -153,8 +198,12 @@ function StageTwo({ text }) {
         <img
           src="https://res.cloudinary.com/dmdjguh0a/image/upload/v1785289451/ezgif-4-bcad5192bf_ssmhuh.gif"
           alt=""
-          width="400px"
-          height="auto"
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
         <LazyVideo
           src={
@@ -164,7 +213,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
         <LazyVideo
           src={
@@ -174,7 +228,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '400px', height: 'auto', display: 'block' }}
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
       </section>
       <section className="panel center" ref={addPanel}>
@@ -186,8 +245,12 @@ function StageTwo({ text }) {
         <img
           src="https://res.cloudinary.com/dmdjguh0a/image/upload/v1785289461/ezgif-3-2872b0537e_xzankr.gif"
           alt=""
-          width="400px"
-          height="auto"
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
         <LazyVideo
           src={
@@ -197,7 +260,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '200px', height: 'auto', display: 'block' }}
+          style={{
+            width: verticalWidth,
+            height: verticalHeight,
+            display: 'block',
+          }}
+          className="gallery-vertical"
         />
         <LazyVideo
           src={
@@ -207,7 +275,12 @@ function StageTwo({ text }) {
           muted
           loop
           playsInline
-          style={{ width: '400px', height: 'auto', display: 'block' }}
+          style={{
+            width: horizontalWidth,
+            height: horizontalHeight,
+            display: 'block',
+          }}
+          className="gallery-horizontal"
         />
       </section>
     </div>

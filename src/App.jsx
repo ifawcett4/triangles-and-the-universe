@@ -8,7 +8,7 @@ import StageZero from './stages/StageZero'
 import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
 import StageThree from './stages/StageThree'
-import Particles from './components/particles/particles'
+import StageFour from './stages/StageFour'
 import StageFive from './stages/StageFive'
 
 const stageData = {
@@ -97,7 +97,7 @@ export default function App() {
           <color attach="background" args={['#06060a']} />
 
           <Suspense fallback={null}>
-            <Particles count={8000} scrollTriggerRef={canvasStageRef} />
+            <StageFour count={8000} scrollTriggerRef={canvasStageRef} />
           </Suspense>
           <Environment preset="sunset" />
         </Canvas>

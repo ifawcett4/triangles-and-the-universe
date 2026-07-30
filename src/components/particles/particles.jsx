@@ -34,7 +34,7 @@ const steps = [
   { step: 6, breakpoint: 0.6, text: 'like pyramids' },
   { step: 7, breakpoint: 0.7, text: 'and art & stuff' },
   { step: 8, breakpoint: 0.8, text: 'and now you are here' },
-  { step: 9, breakpoint: 0.95, text: 'looking at a triangle on a screen' },
+  { step: 9, breakpoint: 0.9, text: 'looking at a triangle on a screen' },
 ]
 
 const SCALE = {
@@ -49,6 +49,7 @@ const SCALE = {
 }
 
 const TRANSITION_FRACTION = 0.35
+const HOLD_EXTRA_PERCENT = 100
 
 function mapRange(progress, from, to, fraction) {
   const width = (to - from) * (fraction || TRANSITION_FRACTION)
@@ -155,11 +156,16 @@ const Particles = (props) => {
       const st = ScrollTrigger.create({
         trigger: scrollTriggerRef?.current ?? '.canvas-stage',
         start: 'top top',
-        end: `+=${steps.length * 2 * 100}%`,
+        end: `+=${steps.length * 2 * 100 + HOLD_EXTRA_PERCENT}%`,
         scrub: 1,
         pin: true,
         onUpdate: (self) => {
-          const progress = self.progress
+          // const progress = self.progress
+
+          const animationFraction =
+            (steps.length * 2 * 100) /
+            (steps.length * 2 * 100 + HOLD_EXTRA_PERCENT)
+          const progress = Math.min(self.progress / animationFraction, 1)
 
           // ── active step text ──
           let step = 0
@@ -181,7 +187,9 @@ const Particles = (props) => {
             steps[2].breakpoint,
             0.5
           )
-          points.current.material.uniforms.uOpacity.value = opacityFactor
+          if (points.current.material) {
+            points.current.material.uniforms.uOpacity.value = opacityFactor
+          }
 
           // ── step 2: spread + scale up ──
           const spreadFactor = mapRange(
@@ -322,7 +330,6 @@ const Particles = (props) => {
           //step 9: Computer Transition — entrance (from step 8) continues,
 
           // ramps 0 -> 1 across the remaining scroll distance after step 9's breakpoint,
-          // since there's no steps[10] to mark an end — "to" must be 1 (end of scroll)
           const computerExpand = mapRange(progress, steps[9].breakpoint, 1)
 
           const computerScale =
@@ -341,7 +348,9 @@ const Particles = (props) => {
         },
       })
 
-      return () => st.kill()
+      return () => {
+        st.kill()
+      }
     },
     { scope: points, dependencies: [] }
   )
@@ -394,6 +403,7 @@ const Particles = (props) => {
           />
         </div>
       </Html>
+
       <Float rotationIntensity={0} floatingRange={[0.1, 0.5]}>
         <points ref={points} scale={[1, 1, 1]} rotation={[0.75, 0, 0.2]}>
           <bufferGeometry>

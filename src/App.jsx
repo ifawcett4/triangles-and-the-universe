@@ -9,6 +9,7 @@ import StageOne from './stages/StageOne'
 import StageTwo from './stages/StageTwo'
 import StageThree from './stages/StageThree'
 import Particles from './components/particles/particles'
+import StageFive from './stages/StageFive'
 
 const stageData = {
   zero: {
@@ -28,7 +29,7 @@ const stageData = {
     description: 'decrypt text',
     text: [
       'I’m a Creative Technologist with five years of agency experience working in immersive technology and a specialized focus in Augmented Reality.',
-      'But really, I’m just someone who can’t pick between design and development and loves making cool things. like...',
+      'But really, I’m just someone who can’t pick between design and development and loves making cool things. Like...',
     ],
   },
   two: {
@@ -47,12 +48,16 @@ const stageData = {
     text: [
       'Im looking to expand my creative tech capabilities',
       'Working with forward thinking creative people ',
-      'who make interesting things',
-      'And I think this could be my kind of place',
-      'So I hope to get to chat more',
-      'but lets get to the imortant stuff',
+      'who make interesting things.',
+      'And I think this could be my kind of place.',
+      'But lets get to the important stuff.',
       'The beginning of the universe!',
     ],
+  },
+  five: {
+    id: 5,
+    description: 'more about',
+    text: ['Thanks for scrolling!'],
   },
 }
 
@@ -97,6 +102,8 @@ export default function App() {
           <Environment preset="sunset" />
         </Canvas>
       </div>
+
+      <StageFive text={stageData.five.text} />
     </main>
   )
 }

@@ -12,7 +12,6 @@ const Computer = forwardRef((props, ref) => {
     let found = null
     scene.traverse((child) => {
       if (child.isMesh && child.material?.name === 'Screen Surface') {
-        console.log('screen candidate:', child.name)
         found = child
       }
     })
@@ -67,9 +66,6 @@ Computer.setScreenLerp = (root, t) => {
   const screenMesh = root?.userData?.screenMesh
   const overlay = screenMesh?.userData?.overlay
 
-  console.log('screenMesh', screenMesh)
-  console.log('overlay', overlay)
-
   if (!overlay) return
 
   overlay.material.opacity = THREE.MathUtils.clamp(t, 0, 1)
@@ -77,7 +73,6 @@ Computer.setScreenLerp = (root, t) => {
   if (screenMesh && t >= 1) {
     screenMesh.material.map = overlay.material.map
     screenMesh.material.needsUpdate = true
-    console.log('screenMesh.material.map', screenMesh.material.map)
   }
 }
 export default Computer

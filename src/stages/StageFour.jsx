@@ -26,11 +26,11 @@ const steps = [
   { step: 1, breakpoint: 0.1, text: 'until...there was something' },
   { step: 2, breakpoint: 0.2, text: 'which became everything' },
   { step: 3, breakpoint: 0.3, text: 'like our Solar System' },
-  { step: 4, breakpoint: 0.4, text: 'which just so happens to include earth' },
+  { step: 4, breakpoint: 0.4, text: 'which just so happens to include Earth' },
   {
     step: 5,
     breakpoint: 0.5,
-    text: 'where all of history happened (RIP Dinosaurs)',
+    text: 'where all of history happened (RIP dinosaurs)',
   },
   { step: 6, breakpoint: 0.6, text: 'like pyramids' },
   { step: 7, breakpoint: 0.7, text: 'and art & stuff' },

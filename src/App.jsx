@@ -29,7 +29,7 @@ const stageData = {
     description: 'decrypt text',
     text: [
       'I’m a Creative Technologist with five years of agency experience working in immersive technology and a specialized focus in Augmented Reality.',
-      'But really, I’m just someone who can’t pick between design and development and loves making cool things. Like...',
+      'But really, I’m just someone who doesn’t think we have to choose between design & development and loves making cool things. Like...',
     ],
   },
   two: {
@@ -49,7 +49,7 @@ const stageData = {
       'Im looking to expand my creative tech capabilities',
       'Working with forward thinking creative people ',
       'who make interesting things.',
-      'And I think this could be my kind of place.',
+      // 'And I think this could be my kind of place.',
       'But lets get to the important stuff.',
       'The beginning of the universe!',
     ],
